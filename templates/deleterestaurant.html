@@ -5,8 +5,10 @@
     <title>Delete Restaurant</title>
   </head>
   <body>
-    <h1>Are you sure you want to delete {{restaurant_name}} ?</h1>
-    <input type="submit" name="submit" value="Delete">
+    <h1>Are you sure you want to delete {{restaurant['name']}} ?</h1>
+    <form class="" action="#" method="post">
+      <input type="submit" name="submit" value="Delete">
+    </form>
     <a href="#">Cancel</a>
   </body>
 </html>
