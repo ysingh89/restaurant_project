@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1>Edit Restaurant</h1>
-    <form class="" action="#" method="post">
+    <form class="" action="{{url_for('editRestaurant',restaurant_id = restaurant['id'])}}" method="post">
       <input type="text" name="new_name" placeholder="{{restaurant['name']}}">
       <input type="submit" name="submit">
     </form>

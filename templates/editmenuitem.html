@@ -5,9 +5,9 @@
     <title>Edit menu item</title>
   </head>
   <body>
-    <h1>Edit menu item {{item['name']}}</h1>
-    <form class="" action="/" method="post">
-      Name:<input type="text" name="new_item_name" placeholder="{{item['name']}}"><br>
+    <h1>Edit menu item {{item.name}}</h1>
+    <form class="" action="{{url_for('editMenuItem',restaurant_id = restaurant_id,menu_id = item.id)}}" method="post">
+      Name:<input type="text" name="new_item_name" placeholder="{{item.name}}"><br>
       Description:<input type="text" name="new_item_description" placeholder="{{item['description']}}"><br>
       Price:<input type="text" name="new_item_price" placeholder="{{item['price']}}"><br>
       Course:<input type="text" name="new_item_course" placeholder="{{item['course']}}"><br>
