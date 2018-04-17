@@ -83,8 +83,11 @@ def deleteRestaurant(restaurant_id):
 def showMenu(restaurant_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).first()
     items = session.query(MenuItem).filter_by(restaurant_id=restaurant_id)
-    return render_template('menu.html', restaurant = restaurant, items = items)
-    # return "This page will show menu for %s restaurant"%restaurant_id
+    if(restaurant):
+        return render_template('menu.html', restaurant = restaurant, items = items)
+    else:
+        return render_template('nodatafound.html',message = "No restaurant exists with ID %s"%restaurant_id)
+    return "This page will show menu for %s restaurant"%restaurant_id
 
 @app.route('/restaurant/<int:restaurant_id>/menu/new', methods = ['GET','POST'])
 def newMenuItem(restaurant_id):
@@ -105,28 +108,32 @@ def newMenuItem(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/<int:menu_id>/edit', methods = ['GET','POST'])
 def editMenuItem(restaurant_id, menu_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).first()
-    item = session.query(MenuItem).filter_by(id = menu_id).first()
-    if(request.method == 'POST'):
-        if(request.form['new_item_name']):
-            item.name = request.form['new_item_name']
-        if(request.form['new_item_price']):
-            item.price = request.form['new_item_price']
-        if(request.form['new_item_course']):
-            item.course = request.form['new_item_course']
-        if(request.form['new_item_description']):
-            item.description = request.form['new_item_description']
-        session.add(item)
-        session.commit()
-        flash("menu item edited")
-        return redirect(url_for('showMenu',restaurant_id = restaurant_id))
+    item = session.query(MenuItem).filter_by(id = menu_id, restaurant_id = restaurant_id).first()
+    if(item and restaurant):
+        if(request.method == 'POST'):
+            if(request.form['new_item_name']):
+                item.name = request.form['new_item_name']
+            if(request.form['new_item_price']):
+                item.price = request.form['new_item_price']
+            if(request.form['new_item_course']):
+                item.course = request.form['new_item_course']
+            if(request.form['new_item_description']):
+                item.description = request.form['new_item_description']
+            session.add(item)
+            session.commit()
+            flash("menu item edited")
+            return redirect(url_for('showMenu',restaurant_id = restaurant_id))
+        else:
+            return render_template('editmenuitem.html',restaurant_id = restaurant_id, item = item)
     else:
-        return render_template('editmenuitem.html',restaurant_id = restaurant_id, item = item)
+        return render_template('nodatafound.html',message = "No data found with given IDs")
+
     return "This page will let you edit menu item %s"%menu_id
 
 @app.route('/restaurant/<int:restaurant_id>/<int:menu_id>/delete', methods = ['GET','POST'])
 def deleteMenuItem(restaurant_id,menu_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).first()
-    item = session.query(MenuItem).filter_by(id = menu_id).first()
+    item = session.query(MenuItem).filter_by(id = menu_id, restaurant_id=restaurant_id).first()
     if(request.method == 'POST'):
         session.delete(item)
         session.commit()
