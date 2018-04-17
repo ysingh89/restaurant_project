@@ -13,7 +13,14 @@ class Restaurant(Base):
 
     name = Column(String(80),nullable =False)
     id = Column(Integer, primary_key = True)
-
+    # JSON
+    # serializable format
+    @property
+    def serialize(self):
+        return {
+            'name': self.name,
+            'id': self.id,
+        }
 
 
 
