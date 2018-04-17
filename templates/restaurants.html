@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Restaurants</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
     <h1>Restaurants</h1>
     <!--MESSAGE FLASHING EXAMPLE -->
     {% with messages = get_flashed_messages() %}
@@ -15,18 +18,15 @@
     </ul>
     {% endif %}
     {% endwith %}
-    
+
     <a href="{{url_for('newRestaurant')}}">Add new restaurant</a>
     {%for i in restaurants%}
     <div>
-      <h2>{{i.id}}. {{i.name}}</h2>
+      <a href="{{url_for('showMenu',restaurant_id=i.id)}}"><h2>{{i.name}}</h2></a>
       <a href="{{url_for('editRestaurant',restaurant_id = i.id)}}">Edit Restaurant</a><br>
       <a href="{{url_for('deleteRestaurant',restaurant_id = i.id)}}">Delete Restaurant</a>
       <br><br>
     </div>
     {%endfor%}
-  </head>
-  <body>
-
   </body>
 </html>

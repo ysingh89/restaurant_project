@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Restaurant Menu</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
   </head>
   <body>
     <h1>{{restaurant.name}} Menu</h1>
@@ -18,7 +19,7 @@
     {% endif %}
     {% endwith %}
 
-    
+
     <a href="{{url_for('newMenuItem',restaurant_id=restaurant.id)}}">Add new menu item</a>
     {%if items%}
       {%for item in items%}
