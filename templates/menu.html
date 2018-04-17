@@ -6,6 +6,19 @@
   </head>
   <body>
     <h1>{{restaurant.name}} Menu</h1>
+    <!--MESSAGE FLASHING EXAMPLE -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+
+    <ul>
+    {% for message in messages %}
+      <li><strong>{{message}}</strong></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+    
     <a href="{{url_for('newMenuItem',restaurant_id=restaurant.id)}}">Add new menu item</a>
     {%if items%}
       {%for item in items%}

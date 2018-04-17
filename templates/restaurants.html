@@ -4,6 +4,18 @@
     <meta charset="utf-8">
     <title>Restaurants</title>
     <h1>Restaurants</h1>
+    <!--MESSAGE FLASHING EXAMPLE -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+
+    <ul>
+    {% for message in messages %}
+      <li><strong>{{message}}</strong></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    
     <a href="{{url_for('newRestaurant')}}">Add new restaurant</a>
     {%for i in restaurants%}
     <div>
